@@ -170,9 +170,9 @@ window.addEventListener('storage',event=>{if(cloudSession)return;if(event.key===
 function clearShare(){sharing=false;$('share-link').value='';$('share-summary').textContent='';$('share-message').textContent='';$('share-open').href='#';}
 async function openShare(name){
  if(!unlocked||busy||sharing)return;sharing=true;const ticket=session;
- try{const data=window.InvoiceShare.build(purchases,name,$('month').value,$('bank').value);const url=await window.InvoiceShare.makeLink(data,viewerBase);if(ticket!==session||!unlocked)return;
+ try{const data=window.InvoiceShare.build(purchases,name,$('month').value,$('bank').value);const url=await window.InvoiceShare.makeLink(data,viewerBase,cloudSession?window.AccountStore.saveShare:undefined);if(ticket!==session||!unlocked)return;
  $('share-summary').textContent=data.name+' · '+data.month.split('-').reverse().join('/')+' · '+data.scope+' · Falta pagar: '+currency(data.items.filter(item=>!item.paid).reduce((sum,item)=>sum+item.cents,0));$('share-link').value=url;$('share-open').href=url;$('share-message').textContent='Copie e envie o link para esta pessoa.';$('share-dialog').showModal();resetIdle();
- }catch(error){if(ticket===session&&unlocked)$('message').textContent=error.message==='too-long'?'Há muitas compras para um único link. Selecione um cartão e gere o link novamente.':'Não foi possível gerar o link. Confira as compras e tente novamente.';}
+ }catch(error){if(ticket===session&&unlocked)$('message').textContent=error.code==='permission-denied'?'Os links curtos precisam da nova regra do Firebase. Seus lançamentos continuam salvos.':error.message==='too-long'?'Há muitas compras para um único link. Selecione um cartão e gere o link novamente.':'Não foi possível gerar o link. Confira as compras e tente novamente.';}
  finally{if(ticket===session)sharing=false;}
 }
 $('share-close').onclick=()=>$('share-dialog').close();$('share-dialog').addEventListener('close',clearShare);

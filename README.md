@@ -61,3 +61,11 @@ Consulte `dividas-android/LEIA-ME.md`. São necessários Android SDK, JDK e Grad
 ## Publicação e dados
 
 Este GitHub guarda o código. O site é publicado separadamente pelo Sites. A configuração pública do Firebase está no código, sem credenciais administrativas. Os lançamentos dos usuários ficam no Firestore, fora do Git; as regras precisam estar publicadas no Firebase. O serviço exige internet para abrir a conta e salvar alterações.
+
+## Links curtos de consulta individual
+
+A consulta curta usa `consulta.html#s1.<identificador>.<chave>`, com aproximadamente 150 caracteres neste domínio. O Firebase guarda somente a cópia criptografada, o nonce, a versão, a data e o identificador do criador. A chave AES fica no fragmento do link e não é armazenada no documento compartilhado. O destinatário pode buscar a cópia pelo identificador aleatório, sem login, e a descriptografia ocorre no navegador. Não é possível listar as consultas nem sobrescrevê-las. Quem tiver o link completo consegue ler os valores selecionados.
+
+Publique o arquivo `app-cartoes/firestore.rules` no Firebase antes de ativar a geração de links curtos em produção. As regras antigas não permitem gravar a coleção `shortShares`. Links longos `#v1` já enviados permanecem compatíveis. O aplicativo continua compartilhando somente a pessoa, o mês e a origem selecionados.
+
+Teste de criptografia e compatibilidade: `node check-short-share.cjs app-cartoes/dist`. O teste do emulador também verifica as permissões das consultas curtas.

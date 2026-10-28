@@ -20,5 +20,26 @@ service cloud.firestore {
    allow update: if owner() && valid() && request.resource.data.revision == resource.data.revision + 1;
    allow list, delete: if false;
   }
+  match /shortShares/{shareId} {
+   function author() {
+    return request.auth != null
+      && request.auth.token.firebase.sign_in_provider == 'google.com';
+   }
+   allow get: if shareId.matches('^[A-Za-z0-9_-]{22}$');
+   allow create: if author() && shareId.matches('^[A-Za-z0-9_-]{22}$')
+     && request.resource.data.keys().hasAll(['version','owner','iv','ciphertext','createdAt'])
+     && request.resource.data.keys().hasOnly(['version','owner','iv','ciphertext','createdAt'])
+     && request.resource.data.version == 1
+     && request.resource.data.owner == request.auth.uid
+     && request.resource.data.iv is string && request.resource.data.iv.size() == 16
+     && request.resource.data.iv.matches('^[A-Za-z0-9_-]+$')
+     && request.resource.data.ciphertext is string
+     && request.resource.data.ciphertext.size() >= 22
+     && request.resource.data.ciphertext.size() <= 200000
+     && request.resource.data.ciphertext.matches('^[A-Za-z0-9_-]+$')
+     && request.resource.data.createdAt == request.time;
+   allow list, update, delete: if false;
+  }
+
  }
 }

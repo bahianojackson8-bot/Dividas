@@ -10,7 +10,18 @@ if(window.AccountMode){
   const app=appSDK.initializeApp(config),auth=authSDK.getAuth(app),db=storeSDK.initializeFirestore(app,{localCache:storeSDK.memoryLocalCache()});
   await authSDK.setPersistence(auth,authSDK.browserLocalPersistence);
   const repository=window.createAccountRepository({sdk:storeSDK,auth,db,validate:window.Ledger.validRecords});
-  window.AccountStore={...repository,login:()=>authSDK.signInWithPopup(auth,new authSDK.GoogleAuthProvider()),logout:()=>authSDK.signOut(auth),onAuth:fn=>authSDK.onAuthStateChanged(auth,fn),user:()=>auth.currentUser};
+  async function saveShare(id,encrypted){
+   const user=auth.currentUser;
+   if(!user||!/^[A-Za-z0-9_-]{22}$/.test(id)||encrypted?.version!==1||typeof encrypted.iv!=='string'||encrypted.iv.length!==16||typeof encrypted.ciphertext!=='string'||encrypted.ciphertext.length>200000)throw Error('invalid-share');
+   await storeSDK.runTransaction(db,async tx=>{
+    if(auth.currentUser?.uid!==user.uid)throw Error('account-changed');
+    const ref=storeSDK.doc(db,'shortShares',id),existing=await tx.get(ref);
+    if(existing.exists())throw Error('share-collision');
+    tx.set(ref,{version:1,owner:user.uid,iv:encrypted.iv,ciphertext:encrypted.ciphertext,createdAt:storeSDK.serverTimestamp()});
+   });
+   if(auth.currentUser?.uid!==user.uid)throw Error('account-changed');
+  }
+  window.AccountStore={...repository,saveShare,login:()=>authSDK.signInWithPopup(auth,new authSDK.GoogleAuthProvider()),logout:()=>authSDK.signOut(auth),onAuth:fn=>authSDK.onAuthStateChanged(auth,fn),user:()=>auth.currentUser};
   window.dispatchEvent(new Event('account-ready'));
  }catch{window.dispatchEvent(new Event('account-unavailable'));}
 }
