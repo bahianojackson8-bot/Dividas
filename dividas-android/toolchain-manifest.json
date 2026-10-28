@@ -1,0 +1,20 @@
+[
+  {
+    "name": "android-cli",
+    "url": "https://dl.google.com/android/repository/commandlinetools-win-16111833_latest.zip",
+    "hash": "57d04f2d75eb8e8fffc5000a987e5de4b5a63e9d",
+    "algorithm": "sha1"
+  },
+  {
+    "name": "java",
+    "url": "https://aka.ms/download-jdk/microsoft-jdk-21.0.13.0.2-windows-x64.zip",
+    "hash": "c5706a9cf482ef1a0622a86eea5b13d557b07f04554572af061e2d02b58c0f99",
+    "algorithm": "sha256"
+  },
+  {
+    "name": "gradle",
+    "url": "https://services.gradle.org/distributions/gradle-8.13-bin.zip",
+    "hash": "20f1b1176237254a6fc204d8434196fa11a4cfb387567519c61556e8710aed78",
+    "algorithm": "sha256"
+  }
+]

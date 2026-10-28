@@ -1,0 +1,19 @@
+{
+  "source": "../app-cartoes/dist",
+  "files": {
+    "index.html": "60c665d22e4f17bbaf03f79c654dbdbf8ef53766eed7c7448115299b562926c0",
+    "app.js": "b74b7a01c48bedb3c9a924778845d757820fdd257f88cd5638986dd3f1c22e82",
+    "finance.js": "e372cb620299ee4e72cdf547a75228c1e8da652483a6d0f9ba861d4316a35897",
+    "vault.js": "6e4a2d82cbe2c10cffa608261341c9b0b6125c97ae83a77cba1177d7b07bb1fb",
+    "share.js": "35efa12a0643b0901e17bea8e87adf02c018da2710a5a762fed75ae4ff1063c3",
+    "consulta.html": "7e576326a98257ab1767fc478ddde14b98e2eed673f6e427044d76afc27bf966",
+    "consulta.js": "93678239c8ad9e57891ce9e2fdee98ef7bd0036a1ca282222e89bc4a44db6ced",
+    "colors.js": "8cd854f101d6f578353f75935fc298eb82c8677afd82c0ab23b6e8eaa6436c34",
+    "theme.js": "0f5cf054dcb594b0f8cc711d0aff90f80e4eab2bd9369f06ea4e2e66b707b808",
+    "theme.css": "035905e8eee9af13a8917bc0ed16085f2d0e1eae0db78f1e2b208b229af31758",
+    "account-core.js": "4f526a55f893b2e7d68fa9182d2c31d33cf1616e90898e70ae71a53f1221b714",
+    "account.js": "1ed8f256a765b94e70191703822a48f19f23c6b82331b39e86586c435a6c370c",
+    "privacidade.html": "c27409fc4b4b81b7519e7a14139e4bde8e30e2b7abb6558866ca87ab29be7a87"
+  },
+  "personal_data_included": false
+}

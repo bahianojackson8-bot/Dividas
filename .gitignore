@@ -1,0 +1,28 @@
+# Dependências, ferramentas e resultados locais
+**/node_modules/
+**/.tools/
+**/.gradle/
+**/build/
+**/.npm-cache/
+**/.emulators/
+**/__pycache__/
+**/.temp/
+*.log
+*.tmp
+*.zip
+*.tar.gz
+*.apk
+*.aab
+# Chaves e configurações privadas
+*.jks
+*.keystore
+*.p12
+*.pem
+.env
+.env.*
+!.env.example
+**/local.properties
+**/*service-account*.json
+**/*firebase-adminsdk*.json
+# Backups pessoais
+*backup*.json
